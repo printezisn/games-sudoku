@@ -18,6 +18,7 @@ export default defineConfig({
       name: 'sudoku',
     },
     copyPublicDir: true,
+    assetsDir: 'module-assets',
   },
   plugins: [
     dts({ rollupTypes: true }),

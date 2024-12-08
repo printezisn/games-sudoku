@@ -19,21 +19,21 @@ const $ = (t) => {
     t,
     (n, o) => o instanceof Set ? Array.from(o) : o
   );
-  localStorage.setItem("board", e);
+  localStorage.setItem("sudoku_board", e);
 }, R = () => {
-  const t = localStorage.getItem("board");
+  const t = localStorage.getItem("sudoku_board");
   return t ? JSON.parse(
     t,
     (n, o) => n === "options" ? new Set(o) : o
   ) : null;
-}, _ = (t) => {
+}, A = (t) => {
   const e = [...t];
   for (let n = e.length - 1; n >= 0; n--) {
     const o = Math.floor(Math.random() * (n + 1)), i = e[o];
     e[o] = e[n], e[n] = i;
   }
   return e;
-}, G = 5, A = {
+}, G = 5, _ = {
   [h.EASY]: 40,
   [h.NORMAL]: 35,
   [h.HARD]: 30,
@@ -55,11 +55,11 @@ const $ = (t) => {
     e[u][r]++, n[c][r]++, o[d][r]++;
   }
   for (let i = 0; i < t.cells.length; i++) {
-    const r = t.cells[i], u = r.value, c = Math.floor(i / 9), d = i % 9, C = Math.floor(c / 3) * 3 + Math.floor(d / 3);
+    const r = t.cells[i], u = r.value, c = Math.floor(i / 9), d = i % 9, k = Math.floor(c / 3) * 3 + Math.floor(d / 3);
     r.options.clear();
     for (let a = 1; a <= 9; a++) {
       const f = u === a ? 2 : 1;
-      e[c][a] < f && n[d][a] < f && o[C][a] < f && r.options.add(a);
+      e[c][a] < f && n[d][a] < f && o[k][a] < f && r.options.add(a);
     }
     r.hasError = u != null && !r.options.has(u), (r.hasError || u == null) && (t.finished = !1);
   }
@@ -108,7 +108,7 @@ const $ = (t) => {
   }
   if (e === -1)
     return b(t), t;
-  const n = _(Array.from(t.cells[e].options));
+  const n = A(Array.from(t.cells[e].options));
   for (let o = 0; o < n.length; o++) {
     const i = Math.floor(e / 9) * 9, r = e % 9, u = Math.floor(e / 27) * 27 + Math.floor(r / 3) * 3, c = P(t);
     let d = !0;
@@ -124,8 +124,8 @@ const $ = (t) => {
           break;
         }
     if (!d) continue;
-    const C = S(c);
-    if (C) return C;
+    const k = S(c);
+    if (k) return k;
   }
   return null;
 }, M = (t) => {
@@ -141,16 +141,16 @@ const $ = (t) => {
     actions: [],
     currentColor: 0
   };
-  if (b(e), A[t] === 0)
+  if (b(e), _[t] === 0)
     return e;
-  const n = S(e), o = _(n.cells);
+  const n = S(e), o = A(n.cells);
   for (let i = 0; i < o.length; i++)
-    i < A[t] ? (o[i].initial = !0, o[i].color = n.currentColor) : o[i].value = null;
+    i < _[t] ? (o[i].initial = !0, o[i].color = n.currentColor) : o[i].value = null;
   return b(n), n;
 };
 function K(t) {
   return new Worker(
-    "/assets/worker-VWXZbi3g.js",
+    "/module-assets/worker-VWXZbi3g.js",
     {
       name: t == null ? void 0 : t.name
     }
@@ -265,7 +265,7 @@ class dt extends HTMLElement {
     window.removeEventListener(g, this.setLoading), window.removeEventListener(p, this.setColor), this.button.removeEventListener("click", this.onButtonClick), this.menu && (document.removeEventListener("keydown", this.onDocumentKeyDown), document.removeEventListener("click", this.onDocumentClick));
   }
 }
-const ut = "_board_nmbl0_1", ht = "_inner_nmbl0_10", ft = "_finished_nmbl0_27", k = {
+const ut = "_board_nmbl0_1", ht = "_inner_nmbl0_10", ft = "_finished_nmbl0_27", C = {
   board: ut,
   inner: ht,
   finished: ft
@@ -274,13 +274,13 @@ class pt extends HTMLElement {
   constructor() {
     super(...arguments);
     l(this, "updateBoard", () => {
-      this.classList.toggle(k.finished, s.board.finished);
+      this.classList.toggle(C.finished, s.board.finished);
     });
   }
   connectedCallback() {
-    this.classList.add(k.board), this.classList.toggle(k.finished, s.board.finished);
+    this.classList.add(C.board), this.classList.toggle(C.finished, s.board.finished);
     const n = document.createElement("div");
-    n.classList.add(k.inner);
+    n.classList.add(C.inner);
     for (let o = 0; o < 9; o++) {
       const i = document.createElement("div");
       for (let r = 0; r < 9; r++) {
@@ -295,15 +295,15 @@ class pt extends HTMLElement {
     window.removeEventListener(p, this.updateBoard);
   }
 }
-const wt = "_cell_d2i8u_1", mt = "_initial_d2i8u_40", bt = "_error_d2i8u_47", gt = "_finished_d2i8u_50", Et = "_right_d2i8u_69", Ct = "_top_d2i8u_73", w = {
+const wt = "_cell_d2i8u_1", mt = "_initial_d2i8u_40", bt = "_error_d2i8u_47", gt = "_finished_d2i8u_50", Et = "_right_d2i8u_69", kt = "_top_d2i8u_73", w = {
   cell: wt,
   initial: mt,
   error: bt,
   finished: gt,
   right: Et,
-  top: Ct
+  top: kt
 };
-class kt extends HTMLElement {
+class Ct extends HTMLElement {
   constructor() {
     super(...arguments);
     l(this, "row", 0);
@@ -375,13 +375,13 @@ class xt extends HTMLElement {
         "data-theme",
         this.switch.ariaChecked === "true" ? "dark" : "light"
       ), localStorage.setItem(
-        "theme",
+        "sudoku_theme",
         this.switch.ariaChecked === "true" ? "dark" : "light"
       ));
     });
   }
   connectedCallback() {
-    let n = localStorage.getItem("theme");
+    let n = localStorage.getItem("sudoku_theme");
     n || (n = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), this.switch = document.createElement("button"), this.switch.type = "button", this.switch.role = "switch", this.switch.ariaLabel = "Enable dark theme", this.switch.ariaChecked = n === "dark" ? "true" : "false", this.switch.innerHTML = `${vt}${Lt}`, this.switch.addEventListener("click", this.onSwitchChange), this.appendChild(this.switch);
   }
   disconnectedCallback() {
@@ -389,16 +389,16 @@ class xt extends HTMLElement {
     (n = this.switch) == null || n.removeEventListener("click", this.onSwitchChange);
   }
 }
-const yt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', At = {
+const yt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', _t = {
   "arrow-left": yt
-}, _t = () => {
+}, At = () => {
   Array.from(document.querySelectorAll("[data-icon]")).forEach((t) => {
-    const e = At[t.getAttribute("data-icon") ?? ""];
+    const e = _t[t.getAttribute("data-icon") ?? ""];
     t.innerHTML = `${e}${t.innerHTML}`;
   });
 }, Mt = () => {
-  customElements.define("app-theme-switch", xt), customElements.define("app-action-button", dt), customElements.define("app-sudoku-board", pt), customElements.define("app-sudoku-cell", kt), T(), _t(), setTimeout(() => {
-    document.body.classList.remove("curtain");
+  customElements.define("app-theme-switch", xt), customElements.define("app-action-button", dt), customElements.define("app-sudoku-board", pt), customElements.define("app-sudoku-cell", Ct), T(), At(), setTimeout(() => {
+    document.getElementsByClassName("curtain")[0].classList.remove("curtain");
   }, 0);
 };
 export {
