@@ -12,8 +12,7 @@
   },
   "homepage": "https://printezisn.github.io/",
   "files": [
-    "dist",
-    "templates"
+    "dist"
   ],
   "module": "./dist/games-sudoku.js",
   "main": "./dist/games-sudoku.umd.cjs",

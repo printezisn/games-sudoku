@@ -5,6 +5,8 @@ import ThemeSwitch from './components/theme-switch';
 import { initGame } from './stores/game/actions';
 import './styles/main.scss';
 import ArrowLeftIcon from 'feather-icons/dist/icons/arrow-left.svg?raw';
+import HeadHtml from '../templates/head.html?raw';
+import BodyHtml from '../templates/body.html?raw';
 
 const icons: { [i: string]: string } = {
   'arrow-left': ArrowLeftIcon,
@@ -33,3 +35,5 @@ export const init = () => {
     document.getElementsByClassName('curtain')[0].classList.remove('curtain');
   }, 0);
 };
+
+export { HeadHtml, BodyHtml };
