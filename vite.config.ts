@@ -14,7 +14,7 @@ const head = fs
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: ['src/index.ts', 'src/templates.ts'],
       name: 'sudoku',
     },
     copyPublicDir: true,

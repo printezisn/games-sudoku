@@ -1,7 +1,7 @@
 {
   "name": "@printezisn/games-sudoku",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Nikos Printezis",
     "url": "https://printezisn.github.io/"
@@ -14,14 +14,22 @@
   "files": [
     "dist"
   ],
-  "module": "./dist/games-sudoku.js",
-  "main": "./dist/games-sudoku.umd.cjs",
+  "module": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/games-sudoku.js",
-      "require": "./dist/games-sudoku.umd.cjs",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
+    },
+    "./templates": {
+      "import": "./dist/templates.js",
+      "require": "./dist/templates.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "engines": {
