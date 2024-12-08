@@ -1,7 +1,7 @@
 {
   "name": "@printezisn/games-sudoku",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Nikos Printezis",
     "url": "https://printezisn.github.io/"
