@@ -1,0 +1,64 @@
+{
+  "name": "@printezisn/games-sudoku",
+  "type": "module",
+  "version": "1.0.0",
+  "author": {
+    "name": "Nikos Printezis",
+    "url": "https://printezisn.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/printezisn/games-sudoku"
+  },
+  "homepage": "https://printezisn.github.io/",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/games-sudoku.js",
+  "main": "./dist/games-sudoku.umd.cjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/games-sudoku.js",
+      "require": "./dist/games-sudoku.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start:dev": "vite dev --port 3000",
+    "build": "vite build",
+    "lint": "tsc && eslint ./src",
+    "lint:fix": "tsc && eslint ./src --fix",
+    "prettier:format": "prettier --write .",
+    "prepare": "husky",
+    "test:unit": "vitest run ./src --passWithNoTests",
+    "test:unit:coverage": "pnpm test:unit --coverage"
+  },
+  "dependencies": {
+    "husky": "9.1.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.9.1",
+    "@typescript-eslint/parser": "8.3.0",
+    "@vitest/coverage-v8": "2.0.5",
+    "@vitest/web-worker": "2.0.5",
+    "eslint": "9.9.1",
+    "eslint-plugin-astro": "1.2.3",
+    "eslint-plugin-jsx-a11y": "6.9.0",
+    "feather-icons": "4.29.2",
+    "globals": "15.9.0",
+    "jsdom": "25.0.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-astro": "0.14.1",
+    "sass": "1.77.8",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.3.0",
+    "vite": "5.4.10",
+    "vite-plugin-dts": "4.3.0",
+    "vite-plugin-html": "3.2.2",
+    "vitest": "2.0.5"
+  }
+}
