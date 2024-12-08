@@ -18,3 +18,4 @@ Find and solve easy to hard sudoku puzzles with a variety of tools in your arsen
 1. `pnpm lint:fix`: uses eslint to find linting issues and fix them if possible.
 1. `pnpm prettier:format`: uses prettier to find formatting issues and fix them if possible.
 1. `pnpm test:unit`: runs the unit tests.
+1. `pnpm test:unit:coverage`: runs the unit tests and creates a coverage report.
