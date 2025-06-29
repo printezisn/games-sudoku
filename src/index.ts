@@ -4,29 +4,36 @@ import SudokuCell from './components/sudoku-cell';
 import ThemeSwitch from './components/theme-switch';
 import { initGame } from './stores/game/actions';
 import './styles/main.scss';
-import ArrowLeftIcon from 'feather-icons/dist/icons/arrow-left.svg?raw';
 
-const icons: { [i: string]: string } = {
-  'arrow-left': ArrowLeftIcon,
-};
+interface Options {
+  moreContentUrl: string;
+  privacyPolicyUrl: string;
+}
 
-const setIcons = () => {
-  Array.from(document.querySelectorAll('[data-icon]')).forEach((el) => {
-    const icon = icons[el.getAttribute('data-icon') ?? ''];
-    el.innerHTML = `${icon}${el.innerHTML}`;
-  });
-};
-
-export const init = () => {
+export const init = (options: Options) => {
   // Initialize components
   customElements.define('app-theme-switch', ThemeSwitch);
   customElements.define('app-action-button', ActionButton);
   customElements.define('app-sudoku-board', SudokuBoard);
   customElements.define('app-sudoku-cell', SudokuCell);
 
+  // Initialize dynamic elements
+  Array.from(document.getElementsByClassName('current-year')).forEach((el) => {
+    el.innerHTML = new Date().getFullYear().toString();
+  });
+  Array.from(document.getElementsByClassName('more-content-link')).forEach(
+    (el) => {
+      (el as HTMLAnchorElement).href = options.moreContentUrl;
+    },
+  );
+  Array.from(document.getElementsByClassName('privacy-policy-link')).forEach(
+    (el) => {
+      (el as HTMLAnchorElement).href = options.privacyPolicyUrl;
+    },
+  );
+
   // Initialize game
   initGame();
-  setIcons();
 
   // Remove curtain
   setTimeout(() => {

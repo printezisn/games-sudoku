@@ -8,7 +8,10 @@
     <%- head %>
     <script type="module">
       import { init } from './src';
-      init();
+      init({
+        moreContentUrl: '/',
+        privacyPolicyUrl: '/privacy-policy',
+      });
     </script>
   </head>
   <body>
