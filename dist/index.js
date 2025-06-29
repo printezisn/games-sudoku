@@ -1,7 +1,7 @@
-var I = Object.defineProperty;
-var O = (t, e, n) => e in t ? I(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
+var N = Object.defineProperty;
+var O = (t, e, n) => e in t ? N(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
 var l = (t, e, n) => O(t, typeof e != "symbol" ? e + "" : e, n);
-const N = (t, e, n = 500, o = 1e3) => {
+const I = (t, e, n = 500, o = 1e3) => {
   let i = null, r = !1;
   return { start: () => {
     i != null && clearTimeout(i), i = setTimeout(() => {
@@ -13,14 +13,14 @@ const N = (t, e, n = 500, o = 1e3) => {
     }, o) : e();
   } };
 };
-var m = /* @__PURE__ */ ((t) => (t[t.CELL_CHANGE = 0] = "CELL_CHANGE", t[t.COLOR_CHANGE = 1] = "COLOR_CHANGE", t))(m || {}), h = /* @__PURE__ */ ((t) => (t[t.EASY = 0] = "EASY", t[t.NORMAL = 1] = "NORMAL", t[t.HARD = 2] = "HARD", t[t.EMPTY = 3] = "EMPTY", t))(h || {}), L = /* @__PURE__ */ ((t) => (t[t.CREATE_NEW = 0] = "CREATE_NEW", t[t.SOLVE = 1] = "SOLVE", t))(L || {});
-const $ = (t) => {
+var w = /* @__PURE__ */ ((t) => (t[t.CELL_CHANGE = 0] = "CELL_CHANGE", t[t.COLOR_CHANGE = 1] = "COLOR_CHANGE", t))(w || {}), h = /* @__PURE__ */ ((t) => (t[t.EASY = 0] = "EASY", t[t.NORMAL = 1] = "NORMAL", t[t.HARD = 2] = "HARD", t[t.EMPTY = 3] = "EMPTY", t))(h || {}), L = /* @__PURE__ */ ((t) => (t[t.CREATE_NEW = 0] = "CREATE_NEW", t[t.SOLVE = 1] = "SOLVE", t))(L || {});
+const R = (t) => {
   const e = JSON.stringify(
     t,
     (n, o) => o instanceof Set ? Array.from(o) : o
   );
   localStorage.setItem("sudoku_board", e);
-}, R = () => {
+}, $ = () => {
   const t = localStorage.getItem("sudoku_board");
   return t ? JSON.parse(
     t,
@@ -55,11 +55,11 @@ const $ = (t) => {
     e[u][r]++, n[c][r]++, o[d][r]++;
   }
   for (let i = 0; i < t.cells.length; i++) {
-    const r = t.cells[i], u = r.value, c = Math.floor(i / 9), d = i % 9, k = Math.floor(c / 3) * 3 + Math.floor(d / 3);
+    const r = t.cells[i], u = r.value, c = Math.floor(i / 9), d = i % 9, C = Math.floor(c / 3) * 3 + Math.floor(d / 3);
     r.options.clear();
     for (let a = 1; a <= 9; a++) {
       const f = u === a ? 2 : 1;
-      e[c][a] < f && n[d][a] < f && o[k][a] < f && r.options.add(a);
+      e[c][a] < f && n[d][a] < f && o[C][a] < f && r.options.add(a);
     }
     r.hasError = u != null && !r.options.has(u), (r.hasError || u == null) && (t.finished = !1);
   }
@@ -69,22 +69,22 @@ const $ = (t) => {
     cellIndex: null,
     from: t.currentColor,
     to: e,
-    type: m.COLOR_CHANGE
+    type: w.COLOR_CHANGE
   }), t.currentColor = e;
 }, z = (t, e, n) => {
   t.actions.push({
     cellIndex: e,
     from: t.cells[e].value,
     to: n,
-    type: m.CELL_CHANGE
+    type: w.CELL_CHANGE
   }), t.cells[e].value = n, t.cells[e].color = t.currentColor, b(t);
 }, B = (t, e) => {
   let n = !1;
   switch (e.type) {
-    case m.COLOR_CHANGE:
+    case w.COLOR_CHANGE:
       t.currentColor = e.from;
       break;
-    case m.CELL_CHANGE:
+    case w.CELL_CHANGE:
       t.cells[e.cellIndex].value = e.from, n = !0;
       break;
   }
@@ -96,7 +96,7 @@ const $ = (t) => {
   let e = !1;
   for (; t.actions.length > 0; ) {
     const n = t.actions.pop();
-    if (e = B(t, n) || e, n.type === m.COLOR_CHANGE)
+    if (e = B(t, n) || e, n.type === w.COLOR_CHANGE)
       break;
   }
   e && b(t);
@@ -124,8 +124,8 @@ const $ = (t) => {
           break;
         }
     if (!d) continue;
-    const k = S(c);
-    if (k) return k;
+    const C = S(c);
+    if (C) return C;
   }
   return null;
 }, M = (t) => {
@@ -156,76 +156,76 @@ function K(t) {
     }
   );
 }
-const g = "setGameLoading", p = "updateGameBoard", x = new K();
-x.onmessage = (t) => {
+const E = "setGameLoading", m = "updateGameBoard", y = new K();
+y.onmessage = (t) => {
   const e = t.data;
-  y.cancel(), e.board && E(e.board);
+  x.cancel(), e.board && g(e.board);
 };
-const W = () => {
-  const t = R();
+const U = () => {
+  const t = $();
   return {
     board: t || M(h.EMPTY),
     loading: !1,
     initialized: !!t
   };
-}, s = W(), y = N(
+}, s = U(), x = I(
   () => {
-    s.loading = !0, window.dispatchEvent(new CustomEvent(g));
+    s.loading = !0, window.dispatchEvent(new CustomEvent(E));
   },
   () => {
-    s.loading = !1, window.dispatchEvent(new CustomEvent(g));
+    s.loading = !1, window.dispatchEvent(new CustomEvent(E));
   }
-), E = (t) => {
-  s.board = t, $(s.board), window.dispatchEvent(new CustomEvent(p));
+), g = (t) => {
+  s.board = t, R(s.board), window.dispatchEvent(new CustomEvent(m));
 }, v = (t) => {
-  s.loading || (y.start(), x.postMessage({
+  s.loading || (x.start(), y.postMessage({
     type: L.CREATE_NEW,
     difficulty: t
   }));
-}, T = () => {
+}, D = () => {
   s.initialized || v(h.EASY);
-}, F = () => {
+}, W = () => {
   v(h.EASY);
-}, J = () => {
+}, F = () => {
   v(h.NORMAL);
-}, U = () => {
+}, J = () => {
   v(h.HARD);
-}, q = () => {
-  s.loading || E(M(h.EMPTY));
 }, X = () => {
-  s.loading || s.board.finished || (Y(s.board), E(s.board));
+  s.loading || g(M(h.EMPTY));
 }, Z = () => {
-  s.loading || s.board.finished || (V(s.board), E(s.board));
+  s.loading || s.board.finished || (Y(s.board), g(s.board));
+}, q = () => {
+  s.loading || s.board.finished || (V(s.board), g(s.board));
 }, Q = () => {
-  s.loading || (y.start(), x.postMessage({
+  s.loading || (x.start(), y.postMessage({
     type: L.SOLVE,
     board: s.board
   }));
 }, tt = () => {
-  s.loading || (j(s.board), E(s.board));
-}, H = (t, e) => {
-  s.loading || (z(s.board, t, e), E(s.board));
+  s.loading || (j(s.board), g(s.board));
+}, T = (t, e) => {
+  s.loading || (z(s.board, t, e), g(s.board));
 }, et = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   changeColor: tt,
-  initGame: T,
-  newEasyGame: F,
-  newEmptyGame: q,
-  newHardGame: U,
-  newNormalGame: J,
+  initGame: D,
+  newEasyGame: W,
+  newEmptyGame: X,
+  newHardGame: J,
+  newNormalGame: F,
   solve: Q,
   state: s,
-  undoColor: Z,
-  undoOne: X,
-  updateCell: H
-}, Symbol.toStringTag, { value: "Module" })), nt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>', ot = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>', it = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>', st = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>', lt = "_colorIcon_1d7c5_1", rt = "_actionButton_1d7c5_6", D = {
+  undoColor: q,
+  undoOne: Z,
+  updateCell: T
+}, Symbol.toStringTag, { value: "Module" })), nt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>', ot = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-ccw"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>', it = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>', st = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>', lt = "_colorIcon_1d7c5_1", rt = "_actionButton_1d7c5_6", H = {
   colorIcon: lt,
   actionButton: rt
 }, at = et, ct = {
   "rotate-arrow": ot,
   plus: it,
   check: st,
-  changeColor: `<span class="${D.colorIcon}"></span>`
+  changeColor: `<span class="${H.colorIcon}"></span>`
 };
 class dt extends HTMLElement {
   constructor() {
@@ -256,31 +256,31 @@ class dt extends HTMLElement {
     });
   }
   connectedCallback() {
-    this.classList.add(D.actionButton), this.action = this.getAttribute("action") ?? "", this.menu = this.getAttribute("menu") ?? "", this.icon = this.getAttribute("icon") ?? "", this.role = "presentation", this.button = document.createElement("button"), this.button.type = "button", this.button.role = "menuitem", this.button.ariaDisabled = "false", this.button.setAttribute(
+    this.classList.add(H.actionButton), this.action = this.getAttribute("action") ?? "", this.menu = this.getAttribute("menu") ?? "", this.icon = this.getAttribute("icon") ?? "", this.role = "presentation", this.button = document.createElement("button"), this.button.type = "button", this.button.role = "menuitem", this.button.ariaDisabled = "false", this.button.setAttribute(
       "data-color",
       s.board.currentColor.toString()
-    ), this.button.classList.add("button"), this.menu && (this.button.ariaHasPopup = "true", this.button.setAttribute("aria-controls", this.menu), this.button.ariaExpanded = "false"), window.addEventListener(g, this.setLoading), window.addEventListener(p, this.setColor), this.button.addEventListener("click", this.onButtonClick), this.menu && (document.addEventListener("keydown", this.onDocumentKeyDown), document.addEventListener("click", this.onDocumentClick)), this.button.innerHTML = `${ct[this.icon] ?? ""}${this.innerHTML}${this.menu ? nt : ""}`, this.replaceChildren(this.button);
+    ), this.button.classList.add("button"), this.menu && (this.button.ariaHasPopup = "true", this.button.setAttribute("aria-controls", this.menu), this.button.ariaExpanded = "false"), window.addEventListener(E, this.setLoading), window.addEventListener(m, this.setColor), this.button.addEventListener("click", this.onButtonClick), this.menu && (document.addEventListener("keydown", this.onDocumentKeyDown), document.addEventListener("click", this.onDocumentClick)), this.button.innerHTML = `${ct[this.icon] ?? ""}${this.innerHTML}${this.menu ? nt : ""}`, this.replaceChildren(this.button);
   }
   disconnectedCallback() {
-    window.removeEventListener(g, this.setLoading), window.removeEventListener(p, this.setColor), this.button.removeEventListener("click", this.onButtonClick), this.menu && (document.removeEventListener("keydown", this.onDocumentKeyDown), document.removeEventListener("click", this.onDocumentClick));
+    window.removeEventListener(E, this.setLoading), window.removeEventListener(m, this.setColor), this.button.removeEventListener("click", this.onButtonClick), this.menu && (document.removeEventListener("keydown", this.onDocumentKeyDown), document.removeEventListener("click", this.onDocumentClick));
   }
 }
-const ut = "_board_nmbl0_1", ht = "_inner_nmbl0_10", ft = "_finished_nmbl0_27", C = {
+const ut = "_board_nmbl0_1", ht = "_inner_nmbl0_10", ft = "_finished_nmbl0_27", k = {
   board: ut,
   inner: ht,
   finished: ft
 };
-class pt extends HTMLElement {
+class mt extends HTMLElement {
   constructor() {
     super(...arguments);
     l(this, "updateBoard", () => {
-      this.classList.toggle(C.finished, s.board.finished);
+      this.classList.toggle(k.finished, s.board.finished);
     });
   }
   connectedCallback() {
-    this.classList.add(C.board), this.classList.toggle(C.finished, s.board.finished);
+    this.classList.add(k.board), this.classList.toggle(k.finished, s.board.finished);
     const n = document.createElement("div");
-    n.classList.add(C.inner);
+    n.classList.add(k.inner);
     for (let o = 0; o < 9; o++) {
       const i = document.createElement("div");
       for (let r = 0; r < 9; r++) {
@@ -289,21 +289,21 @@ class pt extends HTMLElement {
       }
       n.appendChild(i);
     }
-    this.appendChild(n), window.addEventListener(p, this.updateBoard);
+    this.appendChild(n), window.addEventListener(m, this.updateBoard);
   }
   disconnectedCallback() {
-    window.removeEventListener(p, this.updateBoard);
+    window.removeEventListener(m, this.updateBoard);
   }
 }
-const wt = "_cell_d2i8u_1", mt = "_initial_d2i8u_40", bt = "_error_d2i8u_47", gt = "_finished_d2i8u_50", Et = "_right_d2i8u_69", kt = "_top_d2i8u_73", w = {
-  cell: wt,
-  initial: mt,
+const pt = "_cell_d2i8u_1", wt = "_initial_d2i8u_40", bt = "_error_d2i8u_47", Et = "_finished_d2i8u_50", gt = "_right_d2i8u_69", Ct = "_top_d2i8u_73", p = {
+  cell: pt,
+  initial: wt,
   error: bt,
-  finished: gt,
-  right: Et,
-  top: kt
+  finished: Et,
+  right: gt,
+  top: Ct
 };
-class Ct extends HTMLElement {
+class kt extends HTMLElement {
   constructor() {
     super(...arguments);
     l(this, "row", 0);
@@ -315,10 +315,10 @@ class Ct extends HTMLElement {
     l(this, "update", () => {
       var n;
       this.button.classList.toggle(
-        w.initial,
+        p.initial,
         s.board.cells[this.index].initial
-      ), this.button.classList.toggle(w.finished, s.board.finished), this.button.classList.toggle(
-        w.error,
+      ), this.button.classList.toggle(p.finished, s.board.finished), this.button.classList.toggle(
+        p.error,
         s.board.cells[this.index].hasError
       ), this.button.ariaLabel = this.getButtonLabel(), this.button.ariaInvalid = s.board.cells[this.index].hasError ? "true" : "false", this.button.innerHTML = ((n = s.board.cells[this.index].value) == null ? void 0 : n.toString()) ?? "", this.button.setAttribute(
         "data-color",
@@ -339,7 +339,7 @@ class Ct extends HTMLElement {
       if ((o == null ? void 0 : o.role) !== "option" || o.ariaDisabled === "true")
         return;
       const i = o.innerHTML === "-" ? null : Number(o.innerHTML);
-      H(this.index, i), this.button.focus();
+      T(this.index, i), this.button.focus();
     });
     l(this, "onKeyDown", (n) => {
       n.key === "Escape" && this.button.ariaExpanded === "true" && (this.update(), this.button.focus());
@@ -355,18 +355,18 @@ class Ct extends HTMLElement {
       this.button.id = `sudoku-cell-${this.row}-${this.col}`, this.button.type = "button", this.button.ariaDisabled = "false", this.appendChild(this.button);
     });
     l(this, "initDropdown", () => {
-      this.dropdown.id = `sudoku-cell-dropdown-${this.row}-${this.col}`, this.dropdown.role = "listbox", this.dropdown.ariaLabel = "Cell options", this.dropdown.classList.toggle(w.right, this.col > 4), this.dropdown.classList.toggle(w.top, this.row > 5), this.appendChild(this.dropdown);
+      this.dropdown.id = `sudoku-cell-dropdown-${this.row}-${this.col}`, this.dropdown.role = "listbox", this.dropdown.ariaLabel = "Cell options", this.dropdown.classList.toggle(p.right, this.col > 4), this.dropdown.classList.toggle(p.top, this.row > 5), this.appendChild(this.dropdown);
     });
   }
   connectedCallback() {
-    this.classList.add(w.cell), this.row = Number(this.getAttribute("row")), this.col = Number(this.getAttribute("col")), this.index = this.row * 9 + this.col, this.initButton(), this.initDropdown(), this.update(), window.addEventListener(g, this.setLoading), window.addEventListener(p, this.update), this.button.addEventListener("click", this.onButtonClick), document.addEventListener("click", this.onDocumentClick), this.dropdown.addEventListener("click", this.onDropdownClick), document.addEventListener("keydown", this.onKeyDown);
+    this.classList.add(p.cell), this.row = Number(this.getAttribute("row")), this.col = Number(this.getAttribute("col")), this.index = this.row * 9 + this.col, this.initButton(), this.initDropdown(), this.update(), window.addEventListener(E, this.setLoading), window.addEventListener(m, this.update), this.button.addEventListener("click", this.onButtonClick), document.addEventListener("click", this.onDocumentClick), this.dropdown.addEventListener("click", this.onDropdownClick), document.addEventListener("keydown", this.onKeyDown);
   }
   disconnectedCallback() {
-    window.removeEventListener(g, this.setLoading), window.removeEventListener(p, this.update), this.button.removeEventListener("click", this.onButtonClick), document.removeEventListener("click", this.onDocumentClick), this.dropdown.removeEventListener("click", this.onDropdownClick), document.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener(E, this.setLoading), window.removeEventListener(m, this.update), this.button.removeEventListener("click", this.onButtonClick), document.removeEventListener("click", this.onDocumentClick), this.dropdown.removeEventListener("click", this.onDropdownClick), document.removeEventListener("keydown", this.onKeyDown);
   }
 }
 const vt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>', Lt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-class xt extends HTMLElement {
+class yt extends HTMLElement {
   constructor() {
     super(...arguments);
     l(this, "switch", null);
@@ -389,18 +389,21 @@ class xt extends HTMLElement {
     (n = this.switch) == null || n.removeEventListener("click", this.onSwitchChange);
   }
 }
-const yt = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', _t = {
-  "arrow-left": yt
-}, At = () => {
-  Array.from(document.querySelectorAll("[data-icon]")).forEach((t) => {
-    const e = _t[t.getAttribute("data-icon") ?? ""];
-    t.innerHTML = `${e}${t.innerHTML}`;
-  });
-}, Mt = () => {
-  customElements.define("app-theme-switch", xt), customElements.define("app-action-button", dt), customElements.define("app-sudoku-board", pt), customElements.define("app-sudoku-cell", Ct), T(), At(), setTimeout(() => {
+const At = (t) => {
+  customElements.define("app-theme-switch", yt), customElements.define("app-action-button", dt), customElements.define("app-sudoku-board", mt), customElements.define("app-sudoku-cell", kt), Array.from(document.getElementsByClassName("current-year")).forEach((e) => {
+    e.innerHTML = (/* @__PURE__ */ new Date()).getFullYear().toString();
+  }), Array.from(document.getElementsByClassName("more-content-link")).forEach(
+    (e) => {
+      e.href = t.moreContentUrl;
+    }
+  ), Array.from(document.getElementsByClassName("privacy-policy-link")).forEach(
+    (e) => {
+      e.href = t.privacyPolicyUrl;
+    }
+  ), D(), setTimeout(() => {
     document.getElementsByClassName("curtain")[0].classList.remove("curtain");
   }, 0);
 };
 export {
-  Mt as init
+  At as init
 };

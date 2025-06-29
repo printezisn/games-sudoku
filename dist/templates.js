@@ -142,13 +142,19 @@ const n = `<script>
         </article>
       </article>
     </main>
-    <footer class="block align-center">
+    <footer class="block page-footer">
+      <p>
+        © <span class="current-year">2025</span> Nikos Printezis. All Rights
+        Reserved.
+      </p>
       <nav>
         <ul class="no-style">
           <li>
-            <a href="/" class="button" data-icon="arrow-left">
-              Find more content
-            </a>
+            <a class="more-content-link">Find more content</a>
+          </li>
+          <li class="separator">|</li>
+          <li>
+            <a class="privacy-policy-link">Privacy Policy</a>
           </li>
         </ul>
       </nav>
